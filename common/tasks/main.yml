@@ -1,0 +1,34 @@
+---
+# tasks file for common
+- name: Include cloud init tasks
+  ansible.builtin.import_tasks: system.yml
+
+- name: Update the APT package index
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Include cloud init tasks
+  ansible.builtin.import_tasks: cloud-init.yml
+
+- name: Setup motd
+  become: true
+  ansible.builtin.copy:
+    content: "The system is managed by ansible-ipvs-ha"
+    dest: "/etc/motd"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: Install common packages
+  ansible.builtin.package:
+    name:
+      - curl
+      - vim
+      - git
+      - wget
+      - mc
+      - tcpdump
+      - gpg
+      - net-tools
+      - tcpdump        
+    state: present

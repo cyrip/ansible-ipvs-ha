@@ -1,5 +1,6 @@
 ---
-- name: Run kvm role
+- name: Run HA role
   hosts: ha_servers
   roles:
+    - common
     - ha-setup

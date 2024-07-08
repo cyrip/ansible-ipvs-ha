@@ -6,7 +6,6 @@ all:
     ansible_become_user: root
     ansible_port: 22
     ansible_user: ubuntu
-    domain_name: "codeware.local"
   children:
     ha_servers:
       hosts:

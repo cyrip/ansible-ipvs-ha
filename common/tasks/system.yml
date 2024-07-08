@@ -1,0 +1,28 @@
+- name: Output the inventory_hostname
+  ansible.builtin.debug:
+    msg: "Domain name {{ ansible_facts.domain }} {{ domain_name }}"
+
+- name: Set timezone to Europe/Budapest
+  community.general.timezone:
+    name: Europe/Budapest
+
+- name: Set the hostname
+  ansible.builtin.hostname:
+    name: "{{ hostname }}.{{ domain_name }}"
+
+- name: Force color
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/bash.bashrc
+    regexp: "^force_color_prompt=yes$"
+    line: "force_color_prompt=yes"
+    state: present
+    insertafter: EOF
+
+- name: Ensure host entries are present in /etc/hosts
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    line: "{{ item.ip }}   {{ item.hostname }}.{{ domain_name }}  {{ item.hostname }}"
+    state: present
+    create: true
+  loop: "{{ host_entries }}"

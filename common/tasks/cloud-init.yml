@@ -1,0 +1,15 @@
+---
+# tasks file for common
+- name: Remove cloud init
+  become: true
+  ansible.builtin.apt:
+    name: cloud-init
+    state: absent
+
+- name: Remove cloud init files and directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/cloud
+    - /var/lib/cloud

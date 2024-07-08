@@ -1,0 +1,6 @@
+domain_name: "codeware.local"
+
+host_entries:
+  - { ip: "192.168.0.131", hostname: "kcl3-m1" }
+  - { ip: "192.168.0.132", hostname: "kcl3-m2" }
+  - { ip: "192.168.0.133", hostname: "kcl3-m3" }
