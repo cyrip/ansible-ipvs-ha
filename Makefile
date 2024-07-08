@@ -21,6 +21,6 @@ help:
 	@echo "Makefile for managing Ansible tasks"
 	@echo ""
 	@echo "Usage:"
-	@echo "  make bootstrap  Bootstrap the nodes"
+	@echo "  make setup  	 Bootstrap the nodes"
 	@echo "  make lint       Lint the Ansible playbook with ansible-lint"
 	@echo "  make help       Display this help message"
