@@ -1,0 +1,14 @@
+- name: Ensure that modules are present in /etc/sysctl.d/keepalived.conf
+  ansible.builtin.lineinfile:
+    path: /etc/sysctl.d/keepalived.conf
+    line: "{{ item.conf }} = {{ item.value }}"
+    state: present
+    create: true
+    mode: '0644'
+  loop: "{{ keepalived.systcl_configs }}"
+  register: sysctl_modified
+
+- name: Apply sysctl settings
+  ansible.builtin.command:
+    cmd: sysctl --system
+  when: sysctl_modified.changed | bool

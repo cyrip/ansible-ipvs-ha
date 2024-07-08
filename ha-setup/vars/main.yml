@@ -1,2 +1,11 @@
 ---
 # vars file for ha-setup
+keepalived:
+  modules:
+    - ip_vs
+  systcl_configs:
+    - { conf: "net.ipv4.conf.all.arp_ignore", value: 1 }
+    - { conf: "net.ipv4.conf.all.arp_announce", value: 2 }
+    - { conf: "net.ipv4.conf.lo.arp_ignore", value: 1 }
+    - { conf: "net.ipv4.conf.lo.arp_announce", value: 2 }
+    - { conf: "net.ipv4.ip_forward", value: 1 }

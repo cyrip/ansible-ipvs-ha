@@ -1,0 +1,15 @@
+- name: Ensure that modules are present in /etc/modules-load.d/keepalived.conf
+  ansible.builtin.lineinfile:
+    path: /etc/modules-load.d/keepalived.conf
+    line: "{{ item }}"
+    state: present
+    create: true
+    mode: '0644'
+  loop: "{{ keepalived.modules }}"
+  register: modules_modified
+
+- name: Load modules
+  ansible.builtin.systemd:
+    name: "systemd-modules-load"
+    state: restarted
+  when: modules_modified.changed | bool

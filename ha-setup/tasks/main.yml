@@ -1,2 +1,11 @@
 ---
 # tasks file for ha-setup
+- name: Include packages
+  ansible.builtin.import_tasks: packages.yml
+
+- name: Include modules
+  ansible.builtin.import_tasks: modules.yml
+
+- name: Include modules
+  ansible.builtin.import_tasks: sysctl_config.yml
+  
