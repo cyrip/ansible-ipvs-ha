@@ -33,7 +33,7 @@
   register: copy_result
   when: file_1_checksum.stat.checksum != file_2_checksum.stat.checksum  
 
-- name: Restart service keepalived
+- name: Enable service keepalived
   ansible.builtin.systemd_service:
     name: keepalived
     enabled: true
