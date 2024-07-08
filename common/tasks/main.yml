@@ -30,5 +30,5 @@
       - tcpdump
       - gpg
       - net-tools
-      - tcpdump        
+      - tcpdump
     state: present

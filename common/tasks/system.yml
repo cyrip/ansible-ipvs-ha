@@ -25,4 +25,5 @@
     line: "{{ item.ip }}   {{ item.hostname }}.{{ domain_name }}  {{ item.hostname }}"
     state: present
     create: true
+    mode: '0644'
   loop: "{{ host_entries }}"
