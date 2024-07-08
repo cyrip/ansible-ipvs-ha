@@ -1,6 +1,18 @@
 ---
 # vars file for ha-setup
 keepalived:
+  master: "kcl3-m1"
+  master_router_id: "LVS_MASTER"
+  backup_router_id: "LVS_BACKUP"
+  master_priority: "100"
+  backup_priority: "90"
+  auth_pass: "12345"
+  virtual_ipaddress: "192.168.0.130"
+  virtual_port: "80"
+  real_servers:
+    - { ip: "192.168.0.131", port: "80", target_port: "80" }
+    - { ip: "192.168.0.132", port: "80", target_port: "80" }
+    - { ip: "192.168.0.133", port: "80", target_port: "80" }
   modules:
     - ip_vs
   systcl_configs:

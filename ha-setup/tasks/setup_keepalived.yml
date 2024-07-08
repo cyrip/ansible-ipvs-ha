@@ -1,0 +1,24 @@
+- name: Gather main ethernet interface
+  ansible.builtin.set_fact:
+    main_interface: "{{ ansible_default_ipv4.interface }}"
+
+- name: Display the main ethernet interface
+  ansible.builtin.debug:
+    msg: "The main ethernet interface is {{ main_interface }}"
+
+- name: Render keepalived config
+  template:
+    src: etc/keepalived/keepalived.conf.j2
+    dest: /tmp/keepalived.conf
+  changed_when: false
+
+- name: Restart service keepalived
+  ansible.builtin.systemd_service:
+    name: keepalived
+    enabled: true
+
+- name: Restart service keepalived
+  ansible.builtin.systemd_service:
+    name: keepalived  
+    state: restarted
+    daemon_reload: true

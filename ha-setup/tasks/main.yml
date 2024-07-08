@@ -8,4 +8,6 @@
 
 - name: Include modules
   ansible.builtin.import_tasks: sysctl_config.yml
-  
+
+- name: Include modules
+  ansible.builtin.import_tasks: setup_keepalived.yml

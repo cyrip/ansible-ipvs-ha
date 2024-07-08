@@ -1,0 +1,42 @@
+global_defs {
+    router_id {% if inventory_hostname == keepalived.master %}{{ keepalived.master_router_id }}{% else %}{{ keepalived.backup_router_id }}{% endif %}
+
+}
+
+vrrp_instance VI_1 {
+    state {% if inventory_hostname == keepalived.master %}MASTER{% else %}BACKUP{% endif %}
+
+    interface {{ main_interface }}
+    virtual_router_id 51
+    priority {% if inventory_hostname == keepalived.master %}{{ keepalived.master_priority }}{% else %}{{ keepalived.backup_priority }}{% endif %}
+
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass {{ keepalived.auth_pass }}
+    }
+    virtual_ipaddress {
+        {{ keepalived.virtual_ipaddress }}
+    }
+}
+
+virtual_server {{ keepalived.virtual_ipaddress }} {{ keepalived.virtual_port }} {
+    delay_loop 6
+    lb_algo rr
+    lb_kind NAT
+    persistence_timeout 50
+    protocol TCP
+
+{% for item in keepalived.real_servers %}
+    real_server {{ item.ip }} {{ item.port }} {
+        weight 1
+        TCP_CHECK {
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+            connect_port {{ item.target_port }}
+        }
+    }
+
+{% endfor %}
+}

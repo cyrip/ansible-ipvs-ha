@@ -2,5 +2,5 @@
 - name: Run HA role
   hosts: ha_servers
   roles:
-    - common
+#    - common
     - ha-setup
